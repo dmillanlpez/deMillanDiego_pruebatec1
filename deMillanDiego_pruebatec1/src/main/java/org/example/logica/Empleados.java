@@ -4,16 +4,17 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.LocalDate;
 
-@Entity
+
+@Entity // Reconocida por el JPA
 public class Empleados {
 
     // Constructor empty
     public Empleados() {
     }
     // Constructor completo
-    public Empleados(int id, String nombre, String apellidos, String cargo, double salario, Date fechaInicio) {
+    public Empleados(int id, String nombre, String apellidos, String cargo, double salario, LocalDate fechaInicio) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -63,21 +64,33 @@ public class Empleados {
         this.salario = salario;
     }
 
-    public Date getFechaInicio() {
+    public LocalDate getFechaInicio() {
         return fechaInicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
+    public void setFechaInicio(LocalDate fechaInicio) {
         this.fechaInicio = fechaInicio;
     }
 
+    // --------- FIN GETTERS Y SETTERS ------------
+
+    // Metodo toString() para muestra de datos por pantalla cuando sea necesario
+    @Override
+    public String toString() {
+        return String.format(
+                "Empleado: %s | Apellido: %s | Cargo: %s | Salario: %.2f euros | Fecha Inicio Puesto: %s",
+                nombre, apellidos, cargo, salario, fechaInicio
+        );
+    }
+
+
     // Atributos
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Generacion automatica de PK
     private int id;
-    private String nombre;
-    private String apellidos;
-    private String cargo;
-    private double salario;
-    private Date fechaInicio;
+    private String nombre; // Nombre del empleado
+    private String apellidos; // Apellido del empleado
+    private String cargo; // Cargo del empleado
+    private double salario; // Salario del empleado
+    private LocalDate fechaInicio; // Fecha en la que el trabajador inicio su puesto
 }
